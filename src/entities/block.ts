@@ -14,6 +14,14 @@ class Block {
   get position(): Coordinate {
     return this._position;
   }
+
+  get x(): number {
+    return this.position.x;
+  }
+
+  get y(): number {
+    return this.position.y;
+  }
 }
 
 export default Block;
