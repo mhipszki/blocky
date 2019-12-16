@@ -16,4 +16,4 @@ export const colourMapOf = (grid: Block[][]): Colour[][] =>
 export const findBlockOn = (grid: Block[][]) => (x: number, y: number) =>
   grid[x][y];
 
-export const flatten = (arr: any[], next: any[]) => [...arr, ...next];
+export { default as flatten } from './flatten';

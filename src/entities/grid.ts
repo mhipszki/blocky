@@ -2,6 +2,7 @@ import { Coordinate, Colour, Empty } from './types';
 import Block from './block';
 import findPeers from './findPeers';
 import bubbleUpEmptyBlocks from './bubbleUpEmptyBlocks';
+import flatten from './flatten';
 
 /**
  * passing in a colour factory function makes it easier
@@ -43,6 +44,10 @@ class Grid {
 
   get blocks(): Block[][] {
     return this._blocks;
+  }
+
+  get listOfBlocks(): Block[] {
+    return this.blocks.reduce(flatten, []);
   }
 
   blockAt(x: number, y: number) {

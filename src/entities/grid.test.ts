@@ -9,7 +9,7 @@ import {
   Yellow,
   Empty as X,
 } from './types';
-import { flatten, colourMapOf } from './testhelpers';
+import { flatten, colourMapOf, colourMapOfBlocks } from './testhelpers';
 
 test('can be created with lower left and upper right coordinates', () => {
   const lowerLeft: Coordinate = { x: 0, y: 0 };
@@ -45,6 +45,22 @@ test('creates blocks in all positions with various colours', () => {
   expect(grid.blocks[1][0].colour).toEqual(Blue);
   expect(grid.blocks[1][1].position).toEqual({ x: 1, y: 1 });
   expect(grid.blocks[1][1].colour).toEqual(Yellow);
+});
+
+test('can return flat list of all blocks', () => {
+  const lowerLeft: Coordinate = { x: 0, y: 0 };
+  const upperRight: Coordinate = { x: 1, y: 1 };
+  const testColours: Colour[] = [...colours];
+  const colourFactory = jest.fn(() => testColours.shift());
+
+  const grid = new Grid(lowerLeft, upperRight, colourFactory);
+
+  expect(colourMapOfBlocks(grid.listOfBlocks)).toEqual([
+    Red,
+    Green,
+    Blue,
+    Yellow,
+  ]);
 });
 
 test('can clear a block and its connected peers', () => {
