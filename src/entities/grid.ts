@@ -1,5 +1,6 @@
 import { Coordinate, Colour } from './types';
 import Block from './block';
+import findPeers from './findPeers';
 
 /**
  * passing in a colour factory function makes it easier
@@ -41,6 +42,18 @@ class Grid {
 
   get blocks(): Block[][] {
     return this._blocks;
+  }
+
+  blockAt(x: number, y: number) {
+    return this.blocks[x][y];
+  }
+
+  clearWithConnectedPeers(block: Block) {
+    const peers = findPeers(block, this.blocks);
+    [block, ...peers].forEach(peer => {
+      const { x, y } = peer.position;
+      this.blocks[x][y] = null;
+    });
   }
 }
 
