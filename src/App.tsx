@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useCallback } from 'react';
+import Grid from './entities/grid';
 import './App.css';
+import { Colour, Empty } from './entities/types';
 
-const App: React.FC = () => {
+type Props = {
+  grid: Grid;
+};
+
+const blockSize = 100;
+
+const toBackground = (colour: Colour) => (colour === Empty ? 'grey' : colour);
+
+const App: React.FC<Props> = ({ grid }) => {
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+
+  const onClick = (x: number, y: number) => {
+    const block = grid.blocks[x][y];
+    grid.clearWithConnectedPeers(block);
+    grid.collapseEmptyBlocks();
+    forceUpdate();
+  };
+
+  const blocks = grid.listOfBlocks.map(({ x, y, colour }) => (
+    <div
+      className="block"
+      key={`${x},${y}`}
+      style={{
+        backgroundColor: toBackground(colour),
+        width: blockSize,
+        height: blockSize,
+      }}
+      onClick={() => onClick(x, y)}
+    />
+  ));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="grid" style={{ width: grid.width * blockSize }}>
+      {blocks}
     </div>
   );
-}
+};
 
 export default App;
