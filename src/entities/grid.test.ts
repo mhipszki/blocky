@@ -65,3 +65,40 @@ test('can clear a block and its connected peers', () => {
     [R, Y, X, X],
   ]);
 });
+
+test('can collapse empty blocks', () => {
+  const lowerLeft: Coordinate = { x: 0, y: 0 };
+  const upperRight: Coordinate = { x: 3, y: 3 };
+
+  const R = Red;
+  const Y = Yellow;
+
+  const testColours: Colour[] = [
+    [Y, Y, Y, Y],
+    [Y, R, Y, Y],
+    [Y, R, R, Y],
+    [R, R, Y, Y],
+  ].reduce(flatten, []);
+
+  const colourFactory = jest.fn(() => testColours.shift());
+
+  const grid = new Grid(lowerLeft, upperRight, colourFactory);
+
+  grid.clearWithConnectedPeers(grid.blockAt(2, 1));
+
+  expect(colourMapOf(grid.blocks)).toEqual([
+    [Y, Y, Y, Y],
+    [Y, X, Y, Y],
+    [Y, X, X, Y],
+    [X, X, Y, Y],
+  ]);
+
+  grid.collapseEmptyBlocks();
+
+  expect(colourMapOf(grid.blocks)).toEqual([
+    [Y, Y, Y, Y],
+    [Y, Y, Y, X],
+    [Y, Y, X, X],
+    [Y, Y, X, X],
+  ]);
+});

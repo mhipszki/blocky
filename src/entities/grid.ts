@@ -8,6 +8,24 @@ import findPeers from './findPeers';
  */
 export type ColourFactory = () => Colour;
 
+/**
+ * simple bubble sort, lifting up empty blocks
+ */
+const bubbleUpEmpties = (col: Block[]) => {
+  let swapped: boolean;
+  do {
+    swapped = false;
+    for (let i = 0; i < col.length - 1; i++) {
+      if (col[i] === null && col[i + 1] !== null) {
+        let tmp = col[i];
+        col[i] = col[i + 1];
+        col[i + 1] = tmp;
+        swapped = true;
+      }
+    }
+  } while (swapped);
+};
+
 class Grid {
   readonly width: number;
   readonly height: number;
@@ -54,6 +72,10 @@ class Grid {
       const { x, y } = peer.position;
       this.blocks[x][y] = null;
     });
+  }
+
+  collapseEmptyBlocks() {
+    this.blocks.forEach(bubbleUpEmpties);
   }
 }
 
