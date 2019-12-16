@@ -61,6 +61,7 @@ abstract class Block {
 - contains a set of blocks
 - creates all blocks with random colours on instantiation
 - can remove a specific block and its connected blocks with the same colour
+- can collapse empty blocks
 
 ```ts
 abstract class Grid {
@@ -68,5 +69,7 @@ abstract class Grid {
   readonly height: number;
   constructor(readonly lowerLeft: Coordinate, readonly upperRight: Coordinate);
   abstract removeAt(position: Coordinate);
+  abstract clearWithConnectedPeers(block: Block);
+  abstract collapseEmptyBlocks();
 }
 ```

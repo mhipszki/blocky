@@ -1,30 +1,13 @@
 import { Coordinate, Colour } from './types';
 import Block from './block';
 import findPeers from './findPeers';
+import bubbleUpEmptyBlocks from './bubbleUpEmptyBlocks';
 
 /**
  * passing in a colour factory function makes it easier
  * to test functionality with deterministic values
  */
 export type ColourFactory = () => Colour;
-
-/**
- * simple bubble sort, lifting up empty blocks
- */
-const bubbleUpEmpties = (col: Block[]) => {
-  let swapped: boolean;
-  do {
-    swapped = false;
-    for (let i = 0; i < col.length - 1; i++) {
-      if (col[i] === null && col[i + 1] !== null) {
-        let tmp = col[i];
-        col[i] = col[i + 1];
-        col[i + 1] = tmp;
-        swapped = true;
-      }
-    }
-  } while (swapped);
-};
 
 class Grid {
   readonly width: number;
@@ -75,7 +58,7 @@ class Grid {
   }
 
   collapseEmptyBlocks() {
-    this.blocks.forEach(bubbleUpEmpties);
+    this.blocks.forEach(bubbleUpEmptyBlocks);
   }
 }
 
