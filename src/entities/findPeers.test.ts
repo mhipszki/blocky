@@ -1,25 +1,26 @@
 import findPeers from './findPeers';
-import { Colour, Red, Yellow, Blue, Green } from './types';
+import { Colour, Red, Yellow } from './types';
 import Block from './block';
 
-test('returns a single block of a 1x1 array', () => {
-  const singleBlock = new Block({ x: 0, y: 1 }, Red);
-  expect(findPeers(singleBlock, [[singleBlock]])).toEqual([singleBlock]);
-});
+const R = Red;
+const Y = Yellow;
+
+const createGrid = (colours: Colour[][]): Block[][] =>
+  colours.map((col: Colour[], x) =>
+    col.map((colour: Colour, y) => new Block({ x, y }, colour))
+  );
+
+const findBlockOn = (grid: Block[][]) => (x: number, y: number) => grid[x][y];
 
 test('returns all connected blocks with the same colour on a grid', () => {
-  const R = Red;
-  const Y = Yellow;
-  const grid: Block[][] = [
+  const grid = createGrid([
     [Y, Y, Y, Y],
     [Y, Y, R, Y],
     [Y, R, R, R],
     [R, Y, R, R],
-  ].map((col: Colour[], x) =>
-    col.map((colour: Colour, y) => new Block({ x, y }, colour))
-  );
+  ]);
 
-  const blockAt = (x: number, y: number) => grid[x][y];
+  const blockAt = findBlockOn(grid);
 
   expect(findPeers(blockAt(2, 1), grid)).toEqual([
     blockAt(2, 2),
@@ -30,18 +31,15 @@ test('returns all connected blocks with the same colour on a grid', () => {
   ]);
 });
 
-test.only('returns all connected blocks with the same colour on a grid', () => {
-  const R = Red;
-  const grid: Block[][] = [
+test('returns all blocks on a grid only with homogeneous blocks', () => {
+  const grid = createGrid([
     [R, R, R, R],
     [R, R, R, R],
     [R, R, R, R],
     [R, R, R, R],
-  ].map((col: Colour[], x) =>
-    col.map((colour: Colour, y) => new Block({ x, y }, colour))
-  );
+  ]);
 
-  const blockAt = (x: number, y: number) => grid[x][y];
+  const blockAt = findBlockOn(grid);
 
   expect(findPeers(blockAt(2, 1), grid)).toEqual([
     blockAt(1, 1),
