@@ -7,6 +7,10 @@ class Block {
     this._position = position;
   }
 
+  moveDown() {
+    this._position.y--;
+  }
+
   get position(): Coordinate {
     return this._position;
   }
