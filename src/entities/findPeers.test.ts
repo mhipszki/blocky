@@ -1,16 +1,6 @@
 import findPeers from './findPeers';
-import { Colour, Red, Yellow } from './types';
-import Block from './block';
-
-const R = Red;
-const Y = Yellow;
-
-const createGrid = (colours: Colour[][]): Block[][] =>
-  colours.map((col: Colour[], x) =>
-    col.map((colour: Colour, y) => new Block({ x, y }, colour))
-  );
-
-const findBlockOn = (grid: Block[][]) => (x: number, y: number) => grid[x][y];
+import { Red as R, Yellow as Y } from './types';
+import { createGrid, findBlockOn } from './testhelpers';
 
 test('returns all connected blocks with the same colour on a grid', () => {
   const grid = createGrid([
