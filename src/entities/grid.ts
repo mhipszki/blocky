@@ -1,4 +1,4 @@
-import { Coordinate, Colour } from './types';
+import { Coordinate, Colour, Empty } from './types';
 import Block from './block';
 import findPeers from './findPeers';
 import bubbleUpEmptyBlocks from './bubbleUpEmptyBlocks';
@@ -21,7 +21,7 @@ class Grid {
   ) {
     this.width = upperRight.x - lowerLeft.x + 1;
     this.height = upperRight.y - lowerLeft.y + 1;
-    this.createBlocks(generateColour);
+    this._blocks = this.createBlocks(generateColour);
   }
 
   /**
@@ -29,7 +29,7 @@ class Grid {
    * where position of a block corresponds to its position in the array
    */
   private createBlocks(generateColour: ColourFactory) {
-    this._blocks = new Array(this.width).fill(null).map((_, x) => {
+    return new Array(this.width).fill(null).map((_, x) => {
       const column = new Array(this.height)
         .fill(null)
         .map(generateColour)
@@ -53,7 +53,7 @@ class Grid {
     const peers = findPeers(block, this.blocks);
     [block, ...peers].forEach(peer => {
       const { x, y } = peer.position;
-      this.blocks[x][y] = null;
+      this.blocks[x][y] = new Block({ x, y }, Empty);
     });
   }
 

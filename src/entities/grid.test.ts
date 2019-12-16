@@ -1,6 +1,15 @@
 import Grid from './grid';
-import { Coordinate, Colour, colours, Red, Green, Blue, Yellow } from './types';
-import { flatten, colourMapOf, Empty as X } from './testhelpers';
+import {
+  Coordinate,
+  Colour,
+  colours,
+  Red,
+  Green,
+  Blue,
+  Yellow,
+  Empty as X,
+} from './types';
+import { flatten, colourMapOf } from './testhelpers';
 
 test('can be created with lower left and upper right coordinates', () => {
   const lowerLeft: Coordinate = { x: 0, y: 0 };

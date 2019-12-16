@@ -16,7 +16,7 @@ const findPeers = (
     .filter(notIn(ignored))
     .filter(hasSameColourOf(block));
 
-  const peers = immediatePeers.reduce((collected, peer) => {
+  const peers = immediatePeers.reduce<Block[]>((collected, peer) => {
     const peersOfPeers = findPeers(peer, grid, [
       block,
       ...immediatePeers,

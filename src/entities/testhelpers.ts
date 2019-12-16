@@ -1,23 +1,16 @@
 import { Colour } from './types';
 import Block from './block';
 
-export const Empty = 'empty';
-
-export const createColumn = (
-  colours: (Colour | typeof Empty)[],
-  x = 0
-): Block[] =>
-  colours.map((colour: Colour | typeof Empty, y) =>
-    colour === Empty ? null : new Block({ x, y }, colour)
-  );
+export const createColumn = (colours: Colour[], x = 0): Block[] =>
+  colours.map((colour: Colour, y) => new Block({ x, y }, colour));
 
 export const createGrid = (colours: Colour[][]): Block[][] =>
   colours.map((col: Colour[], x) => createColumn(col, x));
 
-export const colourMapOfBlocks = (blocks: Block[]): (Colour | typeof Empty)[] =>
-  blocks.map((block: Block) => (block ? block.colour : Empty));
+export const colourMapOfBlocks = (blocks: Block[]): Colour[] =>
+  blocks.map(({ colour }: Block) => colour);
 
-export const colourMapOf = (grid: Block[][]): (Colour | typeof Empty)[][] =>
+export const colourMapOf = (grid: Block[][]): Colour[][] =>
   grid.map((col: Block[]) => colourMapOfBlocks(col));
 
 export const findBlockOn = (grid: Block[][]) => (x: number, y: number) =>
