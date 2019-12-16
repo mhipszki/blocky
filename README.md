@@ -10,6 +10,7 @@
 - game logic and UI to be separated into different layers
 - when a rendered block is clicked, the UI notifies the game controller to act
 - each time the data has changed the UI re-renders
+- coordinate system: lower left is (0;0), upper right is the greatest position on the grid, together they define the size of the grid
 
 ## Identified types
 
