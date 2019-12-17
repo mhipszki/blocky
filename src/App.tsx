@@ -25,6 +25,7 @@ const App: React.FC<Props> = ({ grid }) => {
   const blocks = grid.listOfBlocks.map(({ x, y, colour }) => (
     <div
       className="block"
+      data-testid={`block-${x}-${y}`}
       key={`${x},${y}`}
       style={{
         backgroundColor: toBackground(colour),
