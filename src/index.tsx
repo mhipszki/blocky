@@ -5,9 +5,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import Grid from './entities/grid';
-import { blockColours } from './entities/types';
+import { blockColours, ColourFactory } from './entities/types';
 
-const colourFactory = () =>
+const colourFactory: ColourFactory = () =>
   blockColours[Math.floor(Math.random() * blockColours.length)];
 
 const grid = new Grid({ x: 0, y: 0 }, { x: 5, y: 5 }, colourFactory);

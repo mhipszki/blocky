@@ -7,9 +7,15 @@ import {
   Green,
   Blue,
   Yellow,
-  Empty as X,
+  Empty,
 } from './types';
 import { flatten, colourMapOf, colourMapOfBlocks } from './testhelpers';
+
+const R = Red;
+const G = Green;
+const B = Blue;
+const Y = Yellow;
+const X = Empty;
 
 test('can be created with lower left and upper right coordinates', () => {
   const lowerLeft: Coordinate = { x: 0, y: 0 };
@@ -51,11 +57,6 @@ test('can return flat list of all blocks for rendering', () => {
   const lowerLeft: Coordinate = { x: 0, y: 0 };
   const upperRight: Coordinate = { x: 2, y: 2 };
 
-  const R = Red;
-  const G = Green;
-  const B = Blue;
-  const Y = Yellow;
-
   const testColours: Colour[] = [
     [B, Y, R],
     [Y, R, G],
@@ -83,9 +84,6 @@ test('can clear a block and its connected peers', () => {
   const lowerLeft: Coordinate = { x: 0, y: 0 };
   const upperRight: Coordinate = { x: 3, y: 3 };
 
-  const R = Red;
-  const Y = Yellow;
-
   const testColours: Colour[] = [
     [Y, Y, Y, Y],
     [Y, Y, R, Y],
@@ -97,7 +95,7 @@ test('can clear a block and its connected peers', () => {
 
   const grid = new Grid(lowerLeft, upperRight, colourFactory);
 
-  grid.clearWithConnectedPeers(grid.blockAt(2, 1));
+  grid.clearWithConnectedPeers(grid.blocks[2][1]);
 
   expect(colourMapOf(grid.blocks)).toEqual([
     [Y, Y, Y, Y],
@@ -111,9 +109,6 @@ test('can collapse empty blocks', () => {
   const lowerLeft: Coordinate = { x: 0, y: 0 };
   const upperRight: Coordinate = { x: 3, y: 3 };
 
-  const R = Red;
-  const Y = Yellow;
-
   const testColours: Colour[] = [
     [Y, Y, Y, Y],
     [Y, R, Y, Y],
@@ -125,7 +120,7 @@ test('can collapse empty blocks', () => {
 
   const grid = new Grid(lowerLeft, upperRight, colourFactory);
 
-  grid.clearWithConnectedPeers(grid.blockAt(2, 1));
+  grid.clearWithConnectedPeers(grid.blocks[2][1]);
 
   expect(colourMapOf(grid.blocks)).toEqual([
     [Y, Y, Y, Y],
