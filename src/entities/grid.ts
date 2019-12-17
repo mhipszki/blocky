@@ -2,7 +2,6 @@ import { Coordinate, Colour, Empty } from './types';
 import Block from './block';
 import findPeers from './findPeers';
 import bubbleUpEmptyBlocks from './bubbleUpEmptyBlocks';
-import flatten from './flatten';
 
 /**
  * passing in a colour factory function makes it easier
@@ -47,7 +46,13 @@ class Grid {
   }
 
   get listOfBlocks(): Block[] {
-    return this.blocks.reduce(flatten, []);
+    const list: Block[] = [];
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        list.unshift(this.blocks[x][y]);
+      }
+    }
+    return list;
   }
 
   blockAt(x: number, y: number) {

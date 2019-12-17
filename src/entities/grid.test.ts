@@ -47,19 +47,35 @@ test('creates blocks in all positions with various colours', () => {
   expect(grid.blocks[1][1].colour).toEqual(Yellow);
 });
 
-test('can return flat list of all blocks', () => {
+test('can return flat list of all blocks for rendering', () => {
   const lowerLeft: Coordinate = { x: 0, y: 0 };
-  const upperRight: Coordinate = { x: 1, y: 1 };
-  const testColours: Colour[] = [...colours];
+  const upperRight: Coordinate = { x: 2, y: 2 };
+
+  const R = Red;
+  const G = Green;
+  const B = Blue;
+  const Y = Yellow;
+
+  const testColours: Colour[] = [
+    [B, Y, R],
+    [Y, R, G],
+    [R, G, B],
+  ].reduce(flatten, []);
+
   const colourFactory = jest.fn(() => testColours.shift());
 
   const grid = new Grid(lowerLeft, upperRight, colourFactory);
 
   expect(colourMapOfBlocks(grid.listOfBlocks)).toEqual([
-    Red,
-    Green,
-    Blue,
-    Yellow,
+    B,
+    G,
+    R,
+    G,
+    R,
+    Y,
+    R,
+    Y,
+    B,
   ]);
 });
 
