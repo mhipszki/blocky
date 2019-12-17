@@ -7,6 +7,7 @@ class Block {
     this._position = position;
   }
 
+  // TODO remove
   moveDown() {
     this._position.y--;
   }
@@ -21,6 +22,10 @@ class Block {
 
   get y(): number {
     return this.position.y;
+  }
+
+  set y(value: number) {
+    this.position.y = value;
   }
 }
 

@@ -17,4 +17,6 @@ export default (blocks: Block[]) => {
       }
     }
   } while (swapped);
+
+  blocks.forEach((block, i) => (block.y = i));
 };
