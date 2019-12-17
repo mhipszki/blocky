@@ -1,5 +1,39 @@
 # Blocky
 
+## Solution
+
+- written in `TypeScript` in a test-driven manner
+- scaffolded using `Create React App`
+- fulfills requirements: generates and draws grid, clicking clears and collapses connected blocks with same colour
+
+Possible improvements:
+
+- thorough testing of UI (`App.tsx`) apart from current sanity check of rendering a grid
+- often used types could be refactored e.g. `type Grid = Block[][]`
+- `Block` could just extend `Coordinate` and thus simplified
+- better UI features e.g. recreate grid to play new game, allow new grid size from UI, scoring, animated collapsing of empty blocks etc.
+- better colours!! xD
+
+To run, first install dependencies:
+
+```
+yarn
+```
+
+then run all unit tests:
+
+```
+yarn test
+```
+
+and start application via:
+
+```
+yarn start
+```
+
+this will open up the solution in a browser and render a grid with random colours.
+
 ## Requirements
 
 - clicking on a block removes the block and all blocks of the same colour that are connected to it
